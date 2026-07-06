@@ -1,21 +1,46 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
+# Dependabot updates are grouped into one monthly version-update PR across ecosystems.
+# Security updates are grouped per ecosystem where GitHub supports grouped security updates.
 version: 2
+multi-ecosystem-groups:
+  monthly-dependencies:
+    schedule:
+      interval: monthly
+      time: 09:00
+      timezone: America/Los_Angeles
+    labels:
+    - dependencies
 updates:
-  - package-ecosystem: "docker" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "github-actions" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "pip" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "daily"
+- package-ecosystem: github-actions
+  directory: /
+  patterns:
+  - '*'
+  multi-ecosystem-group: monthly-dependencies
+  groups:
+    github-actions-security:
+      applies-to: security-updates
+      patterns:
+      - '*'
+- package-ecosystem: pip
+  directories:
+  - /flask
+  - /streamlit
+  patterns:
+  - '*'
+  multi-ecosystem-group: monthly-dependencies
+  groups:
+    pip-security:
+      applies-to: security-updates
+      patterns:
+      - '*'
+- package-ecosystem: docker
+  directories:
+  - /flask
+  - /streamlit
+  patterns:
+  - '*'
+  multi-ecosystem-group: monthly-dependencies
+  groups:
+    docker-security:
+      applies-to: security-updates
+      patterns:
+      - '*'
