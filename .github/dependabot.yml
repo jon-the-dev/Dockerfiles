@@ -1,21 +1,20 @@
-# Dependabot updates are grouped into one monthly version-update PR across ecosystems.
-# Security updates are grouped per ecosystem where GitHub supports grouped security updates.
+# Dependabot version + security updates, grouped per ecosystem.
+# One PR per ecosystem per update-type instead of one PR per package.
 version: 2
-multi-ecosystem-groups:
-  monthly-dependencies:
-    schedule:
-      interval: monthly
-      time: 09:00
-      timezone: America/Los_Angeles
-    labels:
-    - dependencies
 updates:
 - package-ecosystem: github-actions
   directory: /
-  patterns:
-  - '*'
-  multi-ecosystem-group: monthly-dependencies
+  schedule:
+    interval: monthly
+    time: "09:00"
+    timezone: America/Los_Angeles
+  labels:
+  - dependencies
   groups:
+    github-actions-version:
+      applies-to: version-updates
+      patterns:
+      - '*'
     github-actions-security:
       applies-to: security-updates
       patterns:
@@ -24,10 +23,17 @@ updates:
   directories:
   - /flask
   - /streamlit
-  patterns:
-  - '*'
-  multi-ecosystem-group: monthly-dependencies
+  schedule:
+    interval: monthly
+    time: "09:00"
+    timezone: America/Los_Angeles
+  labels:
+  - dependencies
   groups:
+    pip-version:
+      applies-to: version-updates
+      patterns:
+      - '*'
     pip-security:
       applies-to: security-updates
       patterns:
@@ -36,10 +42,17 @@ updates:
   directories:
   - /flask
   - /streamlit
-  patterns:
-  - '*'
-  multi-ecosystem-group: monthly-dependencies
+  schedule:
+    interval: monthly
+    time: "09:00"
+    timezone: America/Los_Angeles
+  labels:
+  - dependencies
   groups:
+    docker-version:
+      applies-to: version-updates
+      patterns:
+      - '*'
     docker-security:
       applies-to: security-updates
       patterns:
